@@ -2,23 +2,17 @@
 	<html lang=en>
 		<head>
 			<title>
-				MuyPicky.com
+				{%block head_title%}MuyPicky.com{%endblock head_title %}
 			</title>
+		{% include 'snippets/css.html' %}	
 		</head>
 	<body>
-		<h1>MuyPicky.com</h1>
+		{% include 'snippets/nav.html' %}
 
-		<a href='/'>Home</a>
-		<a href='/about/'>About</a>
-		<a href='/contact/'>Contact</a>
 		<div class='container'>
-		{%block content %}
-
-		Hello there!
-
-		{%endblock content %}
-
+		{%block content %}{%endblock content %}
 		</div>
 
-	</body>
+{% include 'snippets/js.html' %}
+</body>
 </html>
