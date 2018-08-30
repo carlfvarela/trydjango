@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -6,13 +8,19 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from .models import RestaurantLocation
 from .forms import RestaurantCreateForm, RestaurantLocationCreateForm
 
-
+@login_required()
 def restaurant_createview(request):
 	form = RestaurantLocationCreateForm(request.POST or None)
 	errors = None
 	if form.is_valid():
-		form.save()
-		return HttpResponseRedirect("/restaurants/")
+		if request.user.is_authenticated():
+			instance = form.save(commit=False)
+			instance.owner = request.user
+			instance.save()
+			return HttpResponseRedirect("/restaurants/")
+		else:
+			return HttpResponseRedirect("/login/")
+
 	if form.errors:
 		errors = form.errors
 
@@ -54,12 +62,14 @@ class RestaurantListView(ListView):
 
 class RestaurantDetailView(DetailView): 
 	queryset = RestaurantLocation.objects.all()
-	#def get_object(self, *args, **kwargs):
-	#	rest_id = self.kwargs.get('rest_id')
-	#	obj = get_object_or_404(RestaurantLocation, id = rest_id)
-	#	return obj
 
-class RestaurantCreateView(CreateView):
+class RestaurantCreateView(LoginRequiredMixin, CreateView):
 	form_class = RestaurantLocationCreateForm
+	login_url = '/login/'
 	template_name = 'restaurants/form.html'
 	success_url = '/restaurants/'
+
+	def form_valid(self,form):
+		instance = form.save(commit=False)
+		instance.owner = self.request.user
+		return super(RestaurantCreateView, self).form_valid(form)

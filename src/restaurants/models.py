@@ -14,7 +14,8 @@ class RestaurantLocation(models.Model):
 	category 	= models.CharField(max_length=120, null=True, blank=True, validators=[validate_category])
 	timestamp 	= models.DateTimeField(auto_now_add=True)
 	updated		= models.DateTimeField(auto_now=True)
-    #slug        = models.SlugField(null=True,blank=True)
+	slug 		= models.SlugField(null=True, blank=True)
+
 
 	def __str__(self):
 		return self.name
