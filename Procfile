@@ -1,2 +1,2 @@
-web: gunicorn muypicky.wsgi
+web: gunicorn restaurants.wsgi
 
