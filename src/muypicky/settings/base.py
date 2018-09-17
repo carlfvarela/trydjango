@@ -25,7 +25,7 @@ SECRET_KEY = 'rcsh^=d5$w9_z=_4_$48rm+^t@rovq4+l_=m$t$^kow52_ysvw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
