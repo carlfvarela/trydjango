@@ -1,2 +1,1 @@
-web: gunicorn restaurants.wsgi
-
+web: gunicorn muypicky.wsgi --log-file -
