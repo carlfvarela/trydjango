@@ -1,1 +1,2 @@
-web: gunicorn trydjango.wsgi
+web: gunicorn muypicky.wsgi
+
