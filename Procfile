@@ -1,1 +1,1 @@
-web: gunicorn muypicky.wsgi --log-file -
+web: gunicorn src.wsgi --log-file -
